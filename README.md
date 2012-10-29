@@ -17,7 +17,7 @@ A [Piwik](http://piwik.org/) plugin for [YOURLS](http://yourls.org)
 
 ## Setup
 
-# YOURLS
+### YOURLS
 * Pull the files to <yourls_root>/user/plugins/piwik
 * Place PiwikTracker.php into the <yourls_root>/user/plugins/piwik/libs/Piwik folder
 * Activate the plugin in the admin zone of YOURLS
@@ -25,7 +25,7 @@ A [Piwik](http://piwik.org/) plugin for [YOURLS](http://yourls.org)
 
 If you want better alert messages, you need to [apply this change](https://code.google.com/p/yourls/source/detail?r=787) to your YOURLS installation.
 
-# Piwik
+### Piwik
 
 * Create a test "website" and use that at the beginning until you find the right way to log your hits
 * Create or assign an admin auth token to that site
