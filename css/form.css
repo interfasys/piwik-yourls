@@ -1,0 +1,114 @@
+.message_success {
+    border: 1px solid #4F8A10;
+    background: #DFF2BF;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    width: 70%;
+    margin-left: 15%;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.message_error {
+    border: 1px solid #D8000C;
+    background: #FFBABA;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    width: 70%;
+    margin-left: 15%;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.message_warning {
+    border: 1px solid #9F6000;
+    background: #FEEFB3;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    width: 70%;
+    margin-left: 15%;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+#piwik {
+
+}
+
+#piwik_config {
+    display: inline-block;
+    width: 40%;
+}
+
+#piwik_support {
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+    margin-left:  5%;
+}
+
+#reset {
+	clear: both ;
+}
+
+#piwik_config form {
+    margin-bottom: 20px
+}
+
+.piwik_config_zone {
+    border: 1px solid #2a85b3;
+    background: #F3FAFD;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    margin: 0 0 5% 2%;
+    padding: 0 10px 14px 10px;
+}
+
+.piwik_config_zone .required {
+    font-size: smaller;
+    color: #D8000C;
+}
+
+.piwik_config_zone h3 {
+    color: #2A85B3;
+}
+
+.piwik_config_zone p {
+    margin-top: 0;
+}
+
+.piwik_config_zone p.checkbox_description {
+    margin-top: 25px;
+}
+
+.parameter {
+    position: relative;
+}
+
+.parameter p {
+    display: inline-block;
+}
+
+.piwik_config_zone label {
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
+    margin-bottom: 10px;
+    width: 100px;
+}
+
+.piwik_config_zone label.piwik_config_checkbox {
+    width: 150px;
+}
+
+.piwik_config_zone input.text {
+    background-color: white;
+}
+
+.piwik_config_submit {
+    text-align: center;
+}
