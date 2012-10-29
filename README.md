@@ -22,6 +22,12 @@ A [Piwik](http://piwik.org/) plugin for [YOURLS](http://yourls.org)
 * Activate the plugin in the admin zone of YOURLS
 * Go to the plugin page and fill in the required fields
 
+## Inspiration
+
+ * Piwik plugin thread: https://code.google.com/p/yourls/issues/detail?id=661
+ * Google Analytics plugin: http://www.seodenver.com/yourls-analytics/
+ * WP-Piwik Wordpress plugin: http://wordpress.org/extend/plugins/wp-piwik/
+
 ## License
 
 Copyright 2012 - interfaSys sàrl - www.interfasys.ch
