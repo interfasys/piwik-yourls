@@ -1,0 +1,25 @@
+{
+  "name": "interfasys/piwik-yourls",
+  "type": "project",
+  "description": "A Piwik plugin for YOURLS ",
+  "keywords": [
+    "piwik",
+    "yourls",
+    "statistics"
+  ],
+  "homepage": "https://github.com/interfasys/piwik-yourls",
+  "minimum-stability": "stable",
+  "license": "AGPL 3.0",
+  "authors": [
+    {
+      "name": "Olivier Paroz",
+      "email": "piwik-yourls@interfasys.ch",
+      "role": "Developer",
+      "homepage": "http://www.interfasys.ch"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "piwik/piwik-php-tracker": "*"
+  }
+}

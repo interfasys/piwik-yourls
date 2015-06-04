@@ -1,15 +1,17 @@
 <?php
-/**
+/*
 Plugin Name: Piwik
 Plugin URI: http://www.github.com/interfasys/piwik-yourls
 Description: Logs all requests with <a href="http://piwik.org/">Piwik</a>. Tracks IP and custom variables. Includes "Don't Log Bots" from OZH
-Version: 1.0
+Version: 1.1
 Author: interfaSys s&agrave;rl
 Author URI: http://www.interfasys.ch
- */
+*/
 
 // No direct call
 if (!defined('YOURLS_ABSPATH')) die();
+
+require(__DIR__ . '/vendor/autoload.php');
 
 /**********************
  * ADMIN SECTION
@@ -39,145 +41,152 @@ function itfs_piwik_admin_settings() {
 	// Get current configuration from database
 	$piwik_config = yourls_get_option('piwik_config');
 
+	$pluginurl = YOURLS_PLUGINURL . '/'.yourls_plugin_basename( dirname(__FILE__) );
+
 	?>
-<link rel="stylesheet" href="<?php yourls_site_url(); ?>/user/plugins/piwik/themes/default/uniform.default.css"
-      type="text/css" media="screen" charset="utf-8" xmlns="http://www.w3.org/1999/html"/>
-<link rel="stylesheet" href="<?php yourls_site_url(); ?>/user/plugins/piwik/css/form.css" type="text/css" media="screen"
-      charset="utf-8"/>
-<script type="text/javascript" src="<?php yourls_site_url(); ?>/user/plugins/piwik/js/jquery.uniform.min.js"></script>
-<script type='text/javascript' src="<?php yourls_site_url(); ?>/user/plugins/piwik/js/form.js"></script>
-<div id="piwik">
-    <div id="piwik_config">
-        <h2>Piwik plugin settings</h2>
+	<link rel="stylesheet" href="<?php echo $pluginurl ?>/themes/default/css/uniform.default.min.css"
+		  type="text/css" media="screen" charset="utf-8" xmlns="http://www.w3.org/1999/html"/>
+	<link rel="stylesheet" href="<?php echo $pluginurl ?>/css/form.css" type="text/css"
+		  media="screen"
+		  charset="utf-8"/>
+	<script type="text/javascript" src="<?php echo $pluginurl ?>/js/jquery.uniform.min.js"></script>
+	<script type='text/javascript' src="<?php echo $pluginurl ?>/js/form.js"></script>
+	<div id="piwik">
+		<div id="piwik_config">
+			<h2>Piwik plugin settings</h2>
 
-        <form method="post" id="piwik_config_form">
-            <div class="piwik_config_zone">
-                <h3>Basic settings</h3>
+			<form method="post" id="piwik_config_form">
+				<div class="piwik_config_zone">
+					<h3>Basic settings</h3>
 
-                <div>
-                    <label for="piwik_url">Piwik URL
-                        <span class="required">*</span></label>
-                    <input type="text" id="piwik_url"
-                           name="piwik_config[piwik_url]"
-                           size="40"
-                           value="<?php echo $piwik_config[piwik_url]?>"/>
-                </div>
-                <div>
-                    <label for="site_id">Site ID
-                        <span class="required">*</span></label>
-                    <input type="text" id="site_id"
-                           name="piwik_config[site_id]"
-                           size="2"
-                           value="<?php echo $piwik_config[site_id]?>"/>
-                </div>
-                <div>
-                    <p class="checkbox_description">You can disable the built-in stats system by ticking the box
-                        below</p>
-                    <label for="disable_stats" class="piwik_config_checkbox">Disable built-in stats</label>
-                    <input type="checkbox" <?php echo ($piwik_config[disable_stats] ? 'checked="checked"' : '')?>
-                           id="disable_stats" name="piwik_config[disable_stats]"/>
+					<div>
+						<label for="piwik_url">Piwik URL
+							<span class="required">*</span></label>
+						<input type="text" id="piwik_url"
+							   name="piwik_config[piwik_url]"
+							   size="40"
+							   value="<?php echo $piwik_config[piwik_url] ?>"/>
+					</div>
+					<div>
+						<label for="site_id">Site ID
+							<span class="required">*</span></label>
+						<input type="text" id="site_id"
+							   name="piwik_config[site_id]"
+							   size="2"
+							   value="<?php echo $piwik_config[site_id] ?>"/>
+					</div>
+					<div>
+						<p class="checkbox_description">You can disable the built-in stats system by ticking the box
+							below</p>
+						<label for="disable_stats" class="piwik_config_checkbox">Disable built-in stats</label>
+						<input type="checkbox" <?php echo($piwik_config[disable_stats] ? 'checked="checked"' : '') ?>
+							   id="disable_stats" name="piwik_config[disable_stats]"/>
 
-                    <p>
-                        <small>Clicks will still be counted locally</small>
-                    </p>
-                </div>
-                <div>
-                    <p class="checkbox_description">You can stop tracking visits from bots by ticking the box below</p>
-                    <label for="remove_bots" class="piwik_config_checkbox">Stop tracking bots</label>
-                    <input type="checkbox" <?php echo ($piwik_config[remove_bots] ? 'checked="checked"' : '')?>
-                           id="remove_bots" name="piwik_config[remove_bots]"/>
-                </div>
-                <p>
-                    <span class="required">* Required fields</span>
-                </p>
-            </div>
-            <div id='options'>
-                <div class="piwik_config_zone">
-                    <h3><a href="#authentication">Authentication</a></h3>
+						<p>
+							<small>Clicks will still be counted locally</small>
+						</p>
+					</div>
+					<div>
+						<p class="checkbox_description">You can stop tracking visits from bots by ticking the box
+							below</p>
+						<label for="remove_bots" class="piwik_config_checkbox">Stop tracking bots</label>
+						<input type="checkbox" <?php echo($piwik_config[remove_bots] ? 'checked="checked"' : '') ?>
+							   id="remove_bots" name="piwik_config[remove_bots]"/>
+					</div>
+					<p>
+						<span class="required">* Required fields</span>
+					</p>
+				</div>
+				<div id='options'>
+					<div class="piwik_config_zone">
+						<h3><a href="#authentication">Authentication</a></h3>
 
-                    <div class='parameter' id='authentication'>
-                        <p>This is required if you want to be able to track you visitors' IPs<br/>
-                            This must be an admin token (read/write access)</p>
+						<div class='parameter' id='authentication'>
+							<p>This is required if you want to be able to track you visitors' IPs<br/>
+								This must be an admin token (read/write access)</p>
 
-                        <div>
-                            <label for="token">Auth token</label>
-                            <input type="text" id="token" name="piwik_config[token]" size="40"
-                                   value="<?php echo $piwik_config[token]?>"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="piwik_config_zone">
-                    <h3><a href="#customVariable">Custom Variable</a></h3>
+							<div>
+								<label for="token">Auth token</label>
+								<input type="text" id="token" name="piwik_config[token]" size="40"
+									   value="<?php echo $piwik_config[token] ?>"/>
+							</div>
+						</div>
+					</div>
+					<div class="piwik_config_zone">
+						<h3><a href="#customVariable">Custom Variable</a></h3>
 
-                    <div class='parameter' id='customVariable'>
-                        <p>You can set an optional <a href="http://piwik.org/docs/custom-variables/"
-                                                      rel="external">custom
-                            variable</a> if you have the use for it</p>
+						<div class='parameter' id='customVariable'>
+							<p>You can set an optional <a href="http://piwik.org/docs/custom-variables/"
+														  rel="external">custom
+									variable</a> if you have the use for it</p>
 
-                        <div>
-                            <label for="customvar_name">Variable name</label>
-                            <input type="text"
-                                   id="customvar_name"
-                                   name="piwik_config[customvar_name]"
-                                   value="<?php echo $piwik_config[customvar_name]?>"/>
-                        </div>
-                        <div>
-                            <label for="customvar_value">Variable value</label>
-                            <input type="text"
-                                   id="customvar_value"
-                                   name="piwik_config[customvar_value]"
-                                   value="<?php echo $piwik_config[customvar_value]?>"/>
-                        </div>
-                        <div>
-                            <label>Variable scope</label>
-                            <select class="" name="piwik_config[customvar_scope]">
-                                <option value="visit" <?php echo ($piwik_config[customvar_scope] == "visit" ? 'selected="selected"' : '')?>/>
-                                visit</option>
-                                <option value="page" <?php echo ($piwik_config[customvar_scope] == "page" ? 'selected="selected"' : '')?>/>
-                                page</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="piwik_config_submit">
-                <input type="submit" value="Save settings"/>
-            </div>
-        </form>
-    </div>
-    <div id="piwik_support">
-        <h2>Support developpement</h2>
+							<div>
+								<label for="customvar_name">Variable name</label>
+								<input type="text"
+									   id="customvar_name"
+									   name="piwik_config[customvar_name]"
+									   value="<?php echo $piwik_config[customvar_name] ?>"/>
+							</div>
+							<div>
+								<label for="customvar_value">Variable value</label>
+								<input type="text"
+									   id="customvar_value"
+									   name="piwik_config[customvar_value]"
+									   value="<?php echo $piwik_config[customvar_value] ?>"/>
+							</div>
+							<div>
+								<label>Variable scope</label>
+								<select name="piwik_config[customvar_scope]">
+									<option
+										value="visit" <?php echo($piwik_config[customvar_scope] == "visit" ? 'selected="selected"' : '') ?>/>
+									visit</option>
+									<option
+										value="page" <?php echo($piwik_config[customvar_scope] == "page" ? 'selected="selected"' : '') ?>/>
+									page</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="piwik_config_submit">
+					<input type="submit" value="Save settings"/>
+				</div>
+			</form>
+		</div>
+		<div id="piwik_support">
+			<h2>Support developpement</h2>
 
-        <p>This plugin was developed by <a href="http://www.interfasys.ch" rel="external">interfaSys</a> and you
-            can support its development by making a donation below.</p>
+			<p>This plugin was developed by <a href="http://www.interfasys.ch" rel="external">interfaSys</a> and you
+				can support its development by making a donation below.</p>
 
-        <p>Even $2 makes a difference by showing your appreciation ;)</p>
+			<p>Even $2 makes a difference by showing your appreciation ;)</p>
 
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-            <input type="hidden" name="cmd" value="_s-xclick">
-            <input type="hidden" name="hosted_button_id" value="9J6VKYC45QG46">
-            <input type="image" src="https://www.paypalobjects.com/en_US/CH/i/btn/btn_donateCC_LG.gif" border="0"
-                   name="submit" alt="PayPal - The safer, easier way to pay online!">
-            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-        </form>
-        <h2>Project homepage</h2>
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="9J6VKYC45QG46">
+				<input type="image" src="https://www.paypalobjects.com/en_US/CH/i/btn/btn_donateCC_LG.gif" border="0"
+					   name="submit" alt="PayPal - The safer, easier way to pay online!">
+				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>
+			<h2>Project homepage</h2>
 
-        <p>You can find the latest version of the plugin on <a href="https://github.com/interfasys/piwik-yourls"
-                                                               rel="external">GitHub</a>.</p>
+			<p>You can find the latest version of the plugin on <a href="https://github.com/interfasys/piwik-yourls"
+																   rel="external">GitHub</a>.</p>
 
-        <h3>License</h3>
+			<h3>License</h3>
 
-        <p>Copyright 2012 - interfaSys sàrl - <a href="http://www.interfasys.ch"
-                                                 rel="external">www.interfasys.ch</a><br/><br/>
-            Licensed under the GNU Affero General Public License, version 3 (AGPLv3) (the "License"); you may not use
-            this file except in compliance with the License. You may obtain a copy of the License at<br/><br/>
-            <a href="http://www.gnu.org/licenses/agpl-3.0.html"
-               rel="external">http://www.gnu.org/licenses/agpl-3.0.html</a>
-        </p>
-    </div>
-    <div id="reset"></div>
-</div>
-<?php
+			<p>Copyright 2012-2015 - interfaSys sàrl - <a href="http://www.interfasys.ch"
+													 rel="external">www.interfasys.ch</a><br/><br/>
+				Licensed under the GNU Affero General Public License, version 3 (AGPLv3) (the "License"); you may not
+				use
+				this file except in compliance with the License. You may obtain a copy of the License at<br/><br/>
+				<a href="http://www.gnu.org/licenses/agpl-3.0.html"
+				   rel="external">http://www.gnu.org/licenses/agpl-3.0.html</a>
+			</p>
+		</div>
+		<div id="reset"></div>
+	</div>
+	<?php
 }
 
 /**
@@ -186,7 +195,7 @@ function itfs_piwik_admin_settings() {
 function itfs_piwik_admin_settings_update() {
 	//We make sure we've received a configuration update
 	if (isset($_POST['piwik_config'])) {
-		$piwik_config = array();
+		$piwik_config = [];
 
 		/**
 		 * There will be 2 additional modules. One for people who have donated above a certain amount and a professional version
@@ -220,7 +229,7 @@ function itfs_piwik_admin_settings_update() {
 			} catch (Exception $e) {
 				$message = "ITFS_PIWIK: Error when trying to save settings. " . $e->getMessage();
 				error_log($message, 0);
-				echo yourls_add_notice($message, 'message_error');
+				yourls_add_notice($message, 'message_error');
 				return false;
 			}
 		}
@@ -247,9 +256,9 @@ function itfs_piwik_admin_messages() {
 	}
 
 	if (!empty($error_message)) {
-		echo yourls_add_notice($error_message, 'message_error');
+		yourls_add_notice($error_message, 'message_error');
 	} else {
-		echo yourls_add_notice('Settings have been saved', 'message_success');
+		yourls_add_notice('Settings have been saved', 'message_success');
 	}
 }
 
@@ -313,8 +322,8 @@ yourls_add_filter('shunt_log_redirect', 'itfs_piwik_log_request');
 /**
  * Sends the keyword and destination URL to Piwik
  *
- * @param bool $return    The value to return. Defaults to false with doesn't enable the filter
- * @param string $keyword    The requested keyword
+ * @param bool $return The value to return. Defaults to false with doesn't enable the filter
+ * @param string $keyword The requested keyword
  * @return bool
  */
 function itfs_piwik_log_request($return, $keyword) {
@@ -329,19 +338,6 @@ function itfs_piwik_log_request($return, $keyword) {
 		}
 	}
 
-	try {
-		// Need to use a file_exists check as require only produces a fatal compilation error
-		if (!file_exists(dirname(__FILE__) . '/libs/Piwik/PiwikTracker.php')) {
-			throw new Exception ("Error can't load PiwikTracker.php");
-		} else {
-			// Piwik Tracking API init
-			require_once dirname(__FILE__) . '/libs/Piwik/PiwikTracker.php';
-			PiwikTracker::$URL = $piwik_config[piwik_url];
-		}
-	} catch (Exception $e) {
-		error_log("ITFS_PIWIK: " . $e->getMessage(), 0);
-		return $return;
-	}
 	// Use this to get the destination
 	$destination = yourls_get_keyword_longurl($keyword);
 
@@ -352,13 +348,14 @@ function itfs_piwik_log_request($return, $keyword) {
 		return $return;
 	}
 
+	$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 	//Useful for hosts using one Piwik installation with multiple YOURLS installation
 	$domain_landed = $_SERVER['HTTP_HOST'];
 
-	$page_url = "http://" . $domain_landed . "/" . $keyword;
+	$page_url = $protocol . $domain_landed . "/" . $keyword;
 
 	try {
-		$pt = new PiwikTracker($piwik_config[site_id]);
+		$pt = new PiwikTracker($piwik_config[site_id], $piwik_config[piwik_url]);
 
 		// This will be the entry page in Piwik
 		$pt->setUrl($page_url);
@@ -413,7 +410,7 @@ function itfs_piwik_is_bot() {
 
 	// Array of known bot lowercase strings
 	// Example: 'googlebot' will match 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)'
-	$bots = array(
+	$bots = [
 		// general web bots
 		'googlebot', 'yahoo! slurp',
 		'dotbot', 'yeti', 'http://help.naver.com/robots/', 'scoutjet',
@@ -436,11 +433,11 @@ function itfs_piwik_is_bot() {
 
 		//Undecided
 		//      buzzrank.de  Birubot pycurl/7.18.2 may not be a bot
-	);
+	];
 
-	$bots_ip = array(
+	$bots_ip = [
 		'65.52.0.146', '65.52.17.79', '65.52.2.212',
-	);
+	];
 
 
 	// Check if the current UA string contains a know bot string

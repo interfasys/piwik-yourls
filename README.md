@@ -7,23 +7,22 @@ A [Piwik](http://piwik.org/) plugin for [YOURLS](http://yourls.org)
 * Logs all requests with Piwik
 * Tracks IP and custom variables
 * Lets you disable local tracking/stats
-* Includes "Don't Log Bots" from OZH
+* Includes "Don't Log Bots" from @ozh
 
 
 ## Requirements
 
-* PHP 5.3
+* PHP 5.4
 * PiwikTracker.php from your Piwik installation
 
 ## Setup
 
 ### YOURLS
+
+* Install YOURLS v1.7+
 * Pull the files to <yourls_root>/user/plugins/piwik
-* Place PiwikTracker.php into the <yourls_root>/user/plugins/piwik/libs/Piwik folder
 * Activate the plugin in the admin zone of YOURLS
 * Go to the plugin page and fill in the required fields
-
-If you want better alert messages, you need to [apply this change](https://code.google.com/p/yourls/source/detail?r=787) to your YOURLS installation.
 
 ### Piwik
 
@@ -61,7 +60,7 @@ in plugin.php, function "itfs_piwik_log_request"
 
 ## License
 
-Copyright 2012 - interfaSys sàrl - www.interfasys.ch
+Copyright 2012-2015 - interfaSys sàrl - www.interfasys.ch
 
 Licensed under the GNU Affero General Public License, version 3 (AGPLv3) (the "License");
 you may not use this file except in compliance with the License.

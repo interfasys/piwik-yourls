@@ -1,0 +1,44 @@
+[
+    {
+        "name": "piwik/piwik-php-tracker",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/piwik/piwik-php-tracker.git",
+            "reference": "eee31a509f950e5c2a203629276db1f53ff3f024"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/piwik/piwik-php-tracker/zipball/eee31a509f950e5c2a203629276db1f53ff3f024",
+            "reference": "eee31a509f950e5c2a203629276db1f53ff3f024",
+            "shasum": ""
+        },
+        "time": "2014-12-18 23:21:02",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "."
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-2-Clause"
+        ],
+        "authors": [
+            {
+                "name": "The Piwik Team",
+                "email": "hello@piwik.org",
+                "homepage": "http://piwik.org/the-piwik-team/"
+            }
+        ],
+        "description": "PHP Client for Piwik Analytics Tracking API",
+        "homepage": "http://piwik.org",
+        "keywords": [
+            "analytics",
+            "piwik",
+            "tracker"
+        ]
+    }
+]
