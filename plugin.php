@@ -60,7 +60,7 @@ function itfs_piwik_admin_settings() {
                     <input type="text" id="piwik_url"
                            name="piwik_config[piwik_url]"
                            size="40"
-                           value="<?php echo $piwik_config[piwik_url]?>"/>
+                           value="<?php echo $piwik_config['piwik_url']?>"/>
                 </div>
                 <div>
                     <label for="site_id">Site ID
@@ -68,13 +68,13 @@ function itfs_piwik_admin_settings() {
                     <input type="text" id="site_id"
                            name="piwik_config[site_id]"
                            size="2"
-                           value="<?php echo $piwik_config[site_id]?>"/>
+                           value="<?php echo $piwik_config['site_id']?>"/>
                 </div>
                 <div>
                     <p class="checkbox_description">You can disable the built-in stats system by ticking the box
                         below</p>
                     <label for="disable_stats" class="piwik_config_checkbox">Disable built-in stats</label>
-                    <input type="checkbox" <?php echo ($piwik_config[disable_stats] ? 'checked="checked"' : '')?>
+                    <input type="checkbox" <?php echo ($piwik_config['disable_stats'] ? 'checked="checked"' : '')?>
                            id="disable_stats" name="piwik_config[disable_stats]"/>
 
                     <p>
@@ -84,7 +84,7 @@ function itfs_piwik_admin_settings() {
                 <div>
                     <p class="checkbox_description">You can stop tracking visits from bots by ticking the box below</p>
                     <label for="remove_bots" class="piwik_config_checkbox">Stop tracking bots</label>
-                    <input type="checkbox" <?php echo ($piwik_config[remove_bots] ? 'checked="checked"' : '')?>
+                    <input type="checkbox" <?php echo ($piwik_config['remove_bots'] ? 'checked="checked"' : '')?>
                            id="remove_bots" name="piwik_config[remove_bots]"/>
                 </div>
                 <p>
@@ -102,7 +102,7 @@ function itfs_piwik_admin_settings() {
                         <div>
                             <label for="token">Auth token</label>
                             <input type="text" id="token" name="piwik_config[token]" size="40"
-                                   value="<?php echo $piwik_config[token]?>"/>
+                                   value="<?php echo $piwik_config['token']?>"/>
                         </div>
                     </div>
                 </div>
@@ -119,21 +119,21 @@ function itfs_piwik_admin_settings() {
                             <input type="text"
                                    id="customvar_name"
                                    name="piwik_config[customvar_name]"
-                                   value="<?php echo $piwik_config[customvar_name]?>"/>
+                                   value="<?php echo $piwik_config['customvar_name']?>"/>
                         </div>
                         <div>
                             <label for="customvar_value">Variable value</label>
                             <input type="text"
                                    id="customvar_value"
                                    name="piwik_config[customvar_value]"
-                                   value="<?php echo $piwik_config[customvar_value]?>"/>
+                                   value="<?php echo $piwik_config['customvar_value']?>"/>
                         </div>
                         <div>
                             <label>Variable scope</label>
                             <select class="" name="piwik_config[customvar_scope]">
-                                <option value="visit" <?php echo ($piwik_config[customvar_scope] == "visit" ? 'selected="selected"' : '')?>/>
+                                <option value="visit" <?php echo ($piwik_config['customvar_scope'] == "visit" ? 'selected="selected"' : '')?>/>
                                 visit</option>
-                                <option value="page" <?php echo ($piwik_config[customvar_scope] == "page" ? 'selected="selected"' : '')?>/>
+                                <option value="page" <?php echo ($piwik_config['customvar_scope'] == "page" ? 'selected="selected"' : '')?>/>
                                 page</option>
                             </select>
                         </div>
@@ -192,11 +192,11 @@ function itfs_piwik_admin_settings_update() {
 		 * There will be 2 additional modules. One for people who have donated above a certain amount and a professional version
 		 */
 		if (file_exists(dirname(__FILE__) . '/donations.php')) {
-			$piwik_config[SKU] = 'donations';
+			$piwik_config['SKU'] = 'donations';
 		} else if (file_exists(dirname(__FILE__) . '/pro.php')) {
-			$piwik_config[SKU] = 'pro';
+			$piwik_config['SKU'] = 'pro';
 		} else {
-			$piwik_config[SKU] = 'free';
+			$piwik_config['SKU'] = 'free';
 		}
 
 		// We sanitize each parameter.
@@ -266,15 +266,15 @@ function itfs_piwik_edit_stats_link($actions) {
 	$piwik_config = yourls_get_option('piwik_config');
 
 	// If we don't log stats locally
-	if ($piwik_config[disable_stats]) {
+	if ($piwik_config['disable_stats']) {
 
 		// If we're not using the free version of the plugin
-		if ($piwik_config[SKU] !== "free") {
+		if ($piwik_config['SKU'] !== "free") {
 
 			// Replace each link with a link to the Piwik installation
 			foreach ($actions as $k => &$action) {
 				if ($k == "stats") {
-					$action['href'] = $piwik_config[piwik_url];
+					$action['href'] = $piwik_config['piwik_url'];
 				}
 			}
 		}
@@ -294,7 +294,7 @@ function itfs_piwik_disable_stats($keyword) {
 	$piwik_config = yourls_get_option('piwik_config');
 
 	// We don't display the stats page in the free version if you don't log locally
-	if ($piwik_config[disable_stats] && $piwik_config[SKU] === "free") {
+	if ($piwik_config['disable_stats'] && $piwik_config['SKU'] === "free") {
 		$keyword = $keyword[0];
 
 		// This redirects users to the destination url instead of the stats page
@@ -323,7 +323,7 @@ function itfs_piwik_log_request($return, $keyword) {
 	$piwik_config = yourls_get_option('piwik_config');
 
 	// Let's check if the user wants to log bots
-	if ($piwik_config[remove_bots]) {
+	if ($piwik_config['remove_bots']) {
 		if (itfs_piwik_is_bot()) {
 			return $return;
 		}
@@ -336,7 +336,7 @@ function itfs_piwik_log_request($return, $keyword) {
 		} else {
 			// Piwik Tracking API init
 			require_once dirname(__FILE__) . '/libs/Piwik/PiwikTracker.php';
-			PiwikTracker::$URL = $piwik_config[piwik_url];
+			PiwikTracker::$URL = $piwik_config['piwik_url'];
 		}
 	} catch (Exception $e) {
 		error_log("ITFS_PIWIK: " . $e->getMessage(), 0);
@@ -358,14 +358,14 @@ function itfs_piwik_log_request($return, $keyword) {
 	$page_url = "http://" . $domain_landed . "/" . $keyword;
 
 	try {
-		$pt = new PiwikTracker($piwik_config[site_id]);
+		$pt = new PiwikTracker($piwik_config['site_id']);
 
 		// This will be the entry page in Piwik
 		$pt->setUrl($page_url);
 
 		// This will fail silently if the token is not valid or if the user doesn't have admin rights
-		if (!empty($piwik_config[token])) {
-			$pt->setTokenAuth($piwik_config[token]);
+		if (!empty($piwik_config['token'])) {
+			$pt->setTokenAuth($piwik_config['token']);
 		}
 
 		// This shows up in the visitor logs and identify the source of the data
@@ -376,8 +376,8 @@ function itfs_piwik_log_request($return, $keyword) {
 		$pt->setCustomVariable(3, 'Keyword', $keyword, 'page');
 
 		// User defined custom variable
-		if (!empty($piwik_config[customvar_name]) && !empty($piwik_config[customvar_value])) {
-			$pt->setCustomVariable(4, $piwik_config[customvar_name], $piwik_config[customvar_value], $piwik_config[customvar_scope]);
+		if (!empty($piwik_config['customvar_name']) && !empty($piwik_config['customvar_value'])) {
+			$pt->setCustomVariable(4, $piwik_config['customvar_name'], $piwik_config['customvar_value'], $piwik_config['customvar_scope']);
 		}
 
 		// Track the visit in Piwik
@@ -392,7 +392,7 @@ function itfs_piwik_log_request($return, $keyword) {
 		return $return;
 	}
 
-	if ($piwik_config[disable_stats]) {
+	if ($piwik_config['disable_stats']) {
 		//error_log("ITFS_PIWIK: NOT logging locally", 0);
 		return;
 	} else {
